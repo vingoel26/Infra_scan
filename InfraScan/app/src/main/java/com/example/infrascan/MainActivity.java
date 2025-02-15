@@ -83,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
                 requestCameraPermission();
             }
         });
+        ImageView logoutButton = findViewById(R.id.logout);
+
+        logoutButton.setOnClickListener(  view -> {
+            FirebaseAuth.getInstance().signOut();  // Sign out from Firebase
+            mGoogleSignInClient.signOut();  // Sign out from Google (if using Google Sign-In)
+
+            Intent intent = new Intent(MainActivity.this, Auth.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear backstack
+            startActivity(intent);
+            finish(); // Close MainActivity
+        });
     }
 
     private boolean checkCameraPermission() {
